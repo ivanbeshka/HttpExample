@@ -3,6 +3,7 @@ package com.example.httpexample.interactor;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.httpexample.RecyclerViewUsersAdapter;
 import com.example.httpexample.domain.User;
 import com.example.httpexample.repository.JsonPlaceholderParser;
 
@@ -24,6 +25,7 @@ public class UserTask extends AsyncTask<User, ArrayList<User>, ArrayList<User>> 
     protected ArrayList<User> doInBackground(User[] objects) {
         try {
             ArrayList<User> users = parser.getUsers();
+            Log.d("Users", users.toString());
             return users;
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -35,6 +37,12 @@ public class UserTask extends AsyncTask<User, ArrayList<User>, ArrayList<User>> 
     @Override
     protected void onPostExecute(ArrayList<User> users) {
         super.onPostExecute(users);
+        Log.d("Users", "post ok");
         userResponse.response(users);
     }
+
+    public interface UserResponse {
+        void response(ArrayList<User> users);
+    }
 }
+
